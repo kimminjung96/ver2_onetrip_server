@@ -100,7 +100,7 @@ app.get("/producttheme", (req, res) => {
   models.Product.findAll({
     // 'ASC','DESC'
     order: [["price", "ASC"]],
-    limit: 5,
+    limit: 4,
     attributes: [
       "theme",
       "id",
