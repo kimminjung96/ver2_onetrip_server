@@ -60,7 +60,7 @@ app.get("/products", (req, res) => {
 app.get("/product", (req, res) => {
   models.Product.findAll({
     where: { soldout: 0 },
-    limit: 4,
+    limit: 2,
     // 'ASC','DESC'
     order: [["id", "DESC"]],
     attributes: [
