@@ -25,7 +25,27 @@ app.get("/products", (req, res) => {
   models.Product.findAll({
     // 'ASC','DESC'
     order: [["id", "ASC"]],
-    attributes: ["id", "price", "p_name", "p_sdate", "p_edate", "p_country", "p_area", "trans", "retrans", "p_snum", "p_enum", "departure", "redeparture", "count", "theme", "imageUrl", "hotel", "soldout", "heart"],
+    attributes: [
+      "id",
+      "price",
+      "p_name",
+      "p_sdate",
+      "p_edate",
+      "p_country",
+      "p_area",
+      "trans",
+      "retrans",
+      "p_snum",
+      "p_enum",
+      "departure",
+      "redeparture",
+      "count",
+      "theme",
+      "imageUrl",
+      "hotel",
+      "soldout",
+      "heart",
+    ],
   })
     .then((result) => {
       console.log("product 조회결과:", result);
@@ -39,11 +59,33 @@ app.get("/products", (req, res) => {
 
 app.get("/product", (req, res) => {
   models.Product.findAll({
-    where: { soldout : 0 },
+    where: { soldout: 0 },
     limit: 4,
     // 'ASC','DESC'
     order: [["id", "DESC"]],
-    attributes: ["id", "price", "p_name", "p_sdate", "p_edate", "p_country", "p_area", "trans", "retrans", "p_snum", "p_enum", "departure", "redeparture", "count", "theme", "imageUrl", "hotel", "soldout", "heart", "start", "end"],
+    attributes: [
+      "id",
+      "price",
+      "p_name",
+      "p_sdate",
+      "p_edate",
+      "p_country",
+      "p_area",
+      "trans",
+      "retrans",
+      "p_snum",
+      "p_enum",
+      "departure",
+      "redeparture",
+      "count",
+      "theme",
+      "imageUrl",
+      "hotel",
+      "soldout",
+      "heart",
+      "start",
+      "end",
+    ],
   })
     .then((result) => {
       console.log("product 조회결과:", result);
@@ -58,8 +100,19 @@ app.get("/producttheme", (req, res) => {
   models.Product.findAll({
     // 'ASC','DESC'
     order: [["price", "ASC"]],
-    attributes: ["theme", "id", "price", "p_name", "count", "imageUrl", "hotel", "soldout", "heart", "p_area"],
-
+    limit: 5,
+    attributes: [
+      "theme",
+      "id",
+      "price",
+      "p_name",
+      "count",
+      "imageUrl",
+      "hotel",
+      "soldout",
+      "heart",
+      "p_area",
+    ],
   })
     .then((result) => {
       console.log("product 조회결과:", result);
@@ -72,11 +125,25 @@ app.get("/producttheme", (req, res) => {
 });
 app.get("/productdate", (req, res) => {
   models.Product.findAll({
-    where: { soldout : 0 },
-    limit: 6,
+    where: { soldout: 0 },
+    limit: 3,
     // 'ASC','DESC'
     order: [["count", "ASC"]],
-    attributes: ["id", "price", "p_name", "count", "imageUrl", "soldout", "p_sdate", "p_edate", "departure", "redeparture", "heart" ,"start", "end"],
+    attributes: [
+      "id",
+      "price",
+      "p_name",
+      "count",
+      "imageUrl",
+      "soldout",
+      "p_sdate",
+      "p_edate",
+      "departure",
+      "redeparture",
+      "heart",
+      "start",
+      "end",
+    ],
   })
     .then((result) => {
       console.log("product 조회결과:", result);
@@ -143,7 +210,26 @@ app.get("/likepage/:heart", (req, res) => {
 //상품생성데이터를  데이터베이스 추가
 app.post("/products", (req, res) => {
   const body = req.body;
-  const { p_name, price, p_sdate, p_edate, p_country, p_area, trans, retrans, p_snum, p_enum, departure, redeparture, count, theme, imageUrl, hotel, start, end } = body;
+  const {
+    p_name,
+    price,
+    p_sdate,
+    p_edate,
+    p_country,
+    p_area,
+    trans,
+    retrans,
+    p_snum,
+    p_enum,
+    departure,
+    redeparture,
+    count,
+    theme,
+    imageUrl,
+    hotel,
+    start,
+    end,
+  } = body;
   models.Product.create({
     p_name,
     price,
@@ -177,7 +263,7 @@ app.post("/purchase/:id", (req, res) => {
   const { id } = req.params;
   models.Product.update(
     {
-      count: models.Sequelize.literal('count - 1'),
+      count: models.Sequelize.literal("count - 1"),
       soldout: 1,
     },
     {
@@ -196,7 +282,7 @@ app.post("/purchase2/:id", (req, res) => {
   const { id } = req.params;
   models.Product.update(
     {
-      count: models.Sequelize.literal('count - 1'),
+      count: models.Sequelize.literal("count - 1"),
     },
     {
       where: { id },
@@ -249,12 +335,19 @@ app.post("/heart2/:id", (req, res) => {
 
 /******************* review *******************/
 app.get("/reviews", (req, res) => {
-  models.Review
-    .findAll({
-      // 'ASC','DESC'
-      order: [["id", "ASC"]],
-      attributes: ["id", "user_name", "r_title", "r_text", "r_area", "r_imageUrl","createdAt"],
-    })
+  models.Review.findAll({
+    // 'ASC','DESC'
+    order: [["id", "ASC"]],
+    attributes: [
+      "id",
+      "user_name",
+      "r_title",
+      "r_text",
+      "r_area",
+      "r_imageUrl",
+      "createdAt",
+    ],
+  })
     .then((result) => {
       console.log("reviews 조회결과:", result);
       res.send({ review: result });
@@ -266,13 +359,20 @@ app.get("/reviews", (req, res) => {
 });
 
 app.get("/review", (req, res) => {
-  models.Review
-    .findAll({
-      limit: 1,
-      // 'ASC','DESC'
-      order: [["createdAt", "DESC"]],
-      attributes: ["id", "user_name", "r_title", "r_text", "r_area", "r_imageUrl","createdAt"],
-    })
+  models.Review.findAll({
+    limit: 1,
+    // 'ASC','DESC'
+    order: [["createdAt", "DESC"]],
+    attributes: [
+      "id",
+      "user_name",
+      "r_title",
+      "r_text",
+      "r_area",
+      "r_imageUrl",
+      "createdAt",
+    ],
+  })
     .then((result) => {
       console.log("review 조회결과:", result);
       res.send({ review: result });
@@ -286,14 +386,13 @@ app.get("/review", (req, res) => {
 app.post("/reviews", (req, res) => {
   const body = req.body;
   const { user_name, r_title, r_text, r_area, r_imageUrl } = body;
-  models.Review
-    .create({
-      user_name,
-      r_title,
-      r_text,
-      r_area,
-      r_imageUrl,
-    })
+  models.Review.create({
+    user_name,
+    r_title,
+    r_text,
+    r_area,
+    r_imageUrl,
+  })
     .then((result) => {
       console.log("상품생성결과테스트:", result);
       res.send({ result });
@@ -313,7 +412,6 @@ app.post("/image", upload.single("image"), (req, res) => {
   res.send({
     imageUrl: file.path,
     r_imageUrl: file.path,
-    
   });
 });
 
